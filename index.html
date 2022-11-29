@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8"/>
+    <script type="importmap">
+      {
+        "imports": {
+          "module-a": "./src/module.js",
+          "module-b": "./src/module.js"
+        }
+      }
+
+    </script>
+</head>
+
+<body>
+<button id="runA">Run A</button>
+<button id="runB">Run B</button>
+<div id="app"></div>
+
+
+<script type="module" defer>
+    import mA from "module-a";
+    import mB from "module-b";
+
+    mA.add(() => {
+        const log = document.createElement("div")
+        log.innerText = "updated mA " + mA.foo();
+        document.getElementById("app").appendChild(log)
+    })
+    mB.add(() => {
+        const log = document.createElement("div")
+        log.innerText = "updated mB " + mA.foo();
+        document.getElementById("app").appendChild(log)
+    })
+    document.getElementById("runA").addEventListener("click", () => mA.update(Date.now()));
+    document.getElementById("runB").addEventListener("click", () => mB.update(Date.now()))
+
+</script>
+</body>
+</html>
